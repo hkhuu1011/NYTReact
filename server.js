@@ -4,54 +4,29 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Our scraping tools
-var request = require("request");
-var cheerio = require("cheerio");
-
-// Set mongoose to leverage built in JavaScript ES6 Promises
-mongoose.Promise = Promise;
+// Require Articles Schema
+var Article = require("./models/Article");
 
 // Initialize Express
 var app = express();
+// Sets an initial port. We'll use this later in our listener
+var PORT = process.env.PORT || 3000;
 
-// Use morgan and body parser with our app
+// Run Morgan for Logging
 app.use(logger("dev"));
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Make public a static dir
 app.use(express.static("public"));
 
-// Set Handlebars
-var exphbs = require("express-handlebars");
-var Handlebars = require("handlebars");
-
-Handlebars.registerHelper("inc", function(value, options) {
-    return parseInt(value) + 1;
-});
-
-app.engine("handlebars", exphbs({defaultLayout: "main"}));
-app.set("view engine", "handlebars");
-
-//Routes ----------------------------------------------------
-// require("./routes/api-routes.js")(app);
-// require("./routes/html-routes.js")(app);
-
-const PORT = process.env.PORT || 3000;
+//-----------------------------------------------------------
 
 // Database configuration with mongoose
-var databaseUri = "mongodb://localhost/nytreact";
+mongoose.connect("mongodb://localhost/nytreact");
 var db = mongoose.connection;
-
-if(process.env.MONGODB_URI)
-{
-    mongoose.connect(process.env.MONGODB_URI);
-}
-else
-{
-    mongoose.connect(databaseUri);
-}
 
 // Show any mongoose errors
 db.on("error", function(error) {
@@ -62,6 +37,28 @@ db.on("error", function(error) {
 db.once("open", function() {
     console.log("Mongoose connection successful.");
 });
+
+//----------------------------------------------------------
+
+// Main "/" Route. This will redirect the user to our rendered React application
+app.get("/", function(req, res) {
+  res.sendFile(__dirname + "/public/index.html");
+});
+
+// This is the route we will send GET requests to retrieve our most recent search data.
+// We will call this route the moment our page gets rendered
+app.get("/api", function(req, res) {
+	article.create({
+		title: req.body.title,
+		date: req.body.date,
+		link: req.body.link
+	})
+});
+
+
+
+
+
 
 // Listen on port 3000
 app.listen(PORT, function() {
