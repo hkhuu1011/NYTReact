@@ -10,7 +10,7 @@ var Article = require("./models/Article");
 // Initialize Express
 var app = express();
 // Sets an initial port. We'll use this later in our listener
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 3001;
 
 // Run Morgan for Logging
 app.use(logger("dev"));
@@ -47,14 +47,13 @@ app.get("/", function(req, res) {
 
 // This is the route we will send GET requests to retrieve our most recent search data.
 // We will call this route the moment our page gets rendered
-app.get("/api", function(req, res) {
-	article.create({
-		title: req.body.title,
-		date: req.body.date,
-		link: req.body.link
-	})
-});
-
+// app.get("/api", function(req, res) {
+// 	Article.create({
+// 		title: req.body.title,
+// 		date: req.body.date,
+// 		link: req.body.link
+// 	})
+// });
 
 
 
@@ -62,5 +61,5 @@ app.get("/api", function(req, res) {
 
 // Listen on port 3000
 app.listen(PORT, function() {
-    console.log("App running on port 3000!");
+    console.log("App running on port 3001!");
 });
