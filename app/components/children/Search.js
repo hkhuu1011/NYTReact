@@ -6,13 +6,22 @@ var Search = React.createClass({
 
     // Here we set a generic state associated with the text being searched for
     getInitialState: function() {
-        return { term: "" };
+        return {
+                term: "",
+                startYear: "",
+                endYear: ""
+        };
     },
 
     // This function will respond to the user input
     handleChange: function(event) {
 
-        this.setState({ term: event.target.value });
+        this.setState({
+                        term: event.target.value,
+                        startYear: event.target.value,
+                        endYear: event.target.value
+
+        });
 
     },
 
@@ -31,14 +40,15 @@ var Search = React.createClass({
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title text-center">Search Parameters</h3>
+                    <h3 className="panel-title text-left"><strong>Search Parameters</strong></h3>
                 </div>
                 <div className="panel-body text-left">
                     <form onSubmit={this.handleSubmit}>
+                        {/*Search Terms*/}
                         <div className="form-group">
-                            <h4 className="">
-                                <strong>Location</strong>
-                            </h4>
+                            <h5 className="term">
+                                Search Terms
+                            </h5>
 
                             {/*
                              Note how each of the form elements has an id that matches the state.
@@ -48,19 +58,59 @@ var Search = React.createClass({
                             <input
                                 value={this.state.term}
                                 type="text"
-                                className="form-control text-center"
+                                className="form-control text-left"
                                 id="term"
                                 onChange={this.handleChange}
                                 required
                             />
-                            <br />
-                            <button
-                                className="btn btn-primary"
-                                type="submit"
-                            >
-                                Submit
-                            </button>
                         </div>
+
+                        <h5 className="term">
+                            Number of Records to Retrieve:
+                        </h5>
+                        <select className="form-control" id="numRecordsSelect">
+                            <option value="1">1</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
+
+                        {/*Start Year*/}
+                        <div className="form-group">
+                            <h5 className="startYear">
+                                Start Year (Optional):
+                            </h5>
+                            <input
+                                value={this.state.startYear}
+                                type="text"
+                                className="form-control text-left"
+                                id="term"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </div>
+                        {/*End Year*/}
+                        <div className="form-group">
+                            <h5 className="term">
+                                End Year (Optional):
+                            </h5>
+
+                            <input
+                                value={this.state.endYear}
+                                type="text"
+                                className="form-control text-left"
+                                id="term"
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </div>
+
+                            <button className="btn btn-default" type="submit" id="runSearch">
+                                <i className="glyphicon glyphicon-search"></i> Search
+                            </button>
+
+                            <button className="btn btn-default" type="submit" id="clearAll">
+                                <i className="glyphicon glyphicon-trash"></i> Clear Results
+                            </button>
                     </form>
                 </div>
             </div>

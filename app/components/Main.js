@@ -32,27 +32,27 @@ var Main = React.createClass({
     componentDidUpdate: function() {
 
         // Run the query for the address
-        // helpers.runQuery(this.state.searchTerm).then(function(data) {
-        //     if (data !== this.state.results) {
-        //         console.log("Article", data);
-        //         this.setState({ results: data });
-        //
-        //         // After we've received the result... then post the search term to our history.
-        //         helpers.postArticle(this.state.searchTerm).then(function() {
-        //             console.log("Updated!");
-        //
-        //             // After we've done the post... then get the updated history
-        //             helpers.getArticle().then(function(response) {
-        //                 console.log("Current Article", response.data);
-        //
-        //                 console.log("Article", response.data);
-        //
-        //                 this.setState({ article: response.data });
-        //
-        //             }.bind(this));
-        //         }.bind(this));
-        //     }
-        // }.bind(this));
+    //     helpers.runQuery(this.state.searchTerm).then(function(data) {
+    //         if (data !== this.state.results) {
+    //             console.log("Article", data);
+    //             this.setState({ results: data });
+    //
+    //             // After we've received the result... then post the search term to our history.
+    //             helpers.postArticle(this.state.searchTerm).then(function() {
+    //                 console.log("Updated!");
+    //
+    //                 // After we've done the post... then get the updated history
+    //                 helpers.getArticle().then(function(response) {
+    //                     console.log("Current Article", response.data);
+    //
+    //                     console.log("Article", response.data);
+    //
+    //                     this.setState({ article: response.data });
+    //
+    //                 }.bind(this));
+    //             }.bind(this));
+    //         }
+    //     }.bind(this));
     },
     // This function allows childrens to update the parent.
     setTerm: function(term) {
@@ -64,10 +64,14 @@ var Main = React.createClass({
             <div className="container">
                 <div className="row">
                     <div className="jumbotron">
-                        <h2 className="text-center">New York Times Article Search</h2>
+                        <h2 className="text-center">
+                            <strong>
+                            New York Times Article Search
+                            </strong>
+                        </h2>
                     </div>
 
-                    <div className="col-md-12">
+                    <div className="row">
 
                         <Search setTerm={this.setTerm} />
 
