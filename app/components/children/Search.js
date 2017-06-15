@@ -8,6 +8,7 @@ var Search = React.createClass({
     getInitialState: function() {
         return {
                 term: "",
+                numRecords: "",
                 startYear: "",
                 endYear: ""
         };
@@ -15,14 +16,11 @@ var Search = React.createClass({
 
     // This function will respond to the user input
     handleChange: function(event) {
+        console.log("event: ", event);
 
-        this.setState({
-                        term: event.target.value,
-                        startYear: event.target.value,
-                        endYear: event.target.value
-
-        });
-
+        var newState = {};
+        newState[event.target.id] = event.target.value;
+        this.setState(newState);
     },
 
     // When a user submits...
@@ -32,8 +30,19 @@ var Search = React.createClass({
         event.preventDefault();
 
         // Set the parent to have the search term
-        this.props.setTerm(this.state.term);
-        this.setState({ term: "" });
+        this.props.setTerm(
+                            this.state.term,
+                            this.state.numRecords,
+                            this.state.startYear,
+                            this.state.endYear
+        );
+
+        this.setState({
+                            term: "",
+                            numRecords: "",
+                            startYear: "",
+                            endYear: ""
+        });
     },
     // Here we describe this component's render method
     render: function() {
@@ -44,6 +53,7 @@ var Search = React.createClass({
                 </div>
                 <div className="panel-body text-left">
                     <form onSubmit={this.handleSubmit}>
+
                         {/*Search Terms*/}
                         <div className="form-group">
                             <h5 className="term">
@@ -65,10 +75,11 @@ var Search = React.createClass({
                             />
                         </div>
 
-                        <h5 className="term">
+                        {/*Number option*/}
+                        <h5 className="numRecordsSelect">
                             Number of Records to Retrieve:
                         </h5>
-                        <select className="form-control" id="numRecordsSelect">
+                        <select className="form-control" id="numRecordsSelect" value={this.state.numRecords}>
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10">10</option>
@@ -83,14 +94,15 @@ var Search = React.createClass({
                                 value={this.state.startYear}
                                 type="text"
                                 className="form-control text-left"
-                                id="term"
+                                id="startYear"
                                 onChange={this.handleChange}
                                 required
                             />
                         </div>
+
                         {/*End Year*/}
                         <div className="form-group">
-                            <h5 className="term">
+                            <h5 className="endYear">
                                 End Year (Optional):
                             </h5>
 
@@ -98,7 +110,7 @@ var Search = React.createClass({
                                 value={this.state.endYear}
                                 type="text"
                                 className="form-control text-left"
-                                id="term"
+                                id="endYear"
                                 onChange={this.handleChange}
                                 required
                             />

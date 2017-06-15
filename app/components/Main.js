@@ -19,6 +19,9 @@ var Main = React.createClass({
     // The moment the page renders get the Article
     componentDidMount: function() {
         // Get the latest article.
+        // If we have a new search term, run a new search
+        // if (prevState.searchTerm !== this.state.searchTerm) {
+        //     console.log("UPDATED");
         // helpers.getArticle().then(function(response) {
         //     console.log(response);
         //     if (response !== this.state.article) {
