@@ -1,23 +1,28 @@
 // Include the axios package for performing HTTP requests (promise based alternative to request)
-var axios = require("axios");
+import axios from "axios";
 
 // New York Times API
-var nytAPI = "220abae76758485297324496caf23575";
+const nytAPI = "220abae76758485297324496caf23575";
 
 // Helper functions for making API Calls
-var helper = {
+const helper = {
 
     // This function serves our purpose of running the query to NYT.
-    runQuery: function(title) {
+    runQuery: (title) => {
 
         console.log(title);
 
         // Grabbing the article
-        var queryURL = "http://api.nytimes.com/svc/search/v1/article?format=json&query=smoking&api-key=" + nytAPI;
-        return axios.get(queryURL).then(function(response) {
+        // https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${myKey}&q=${topic}&begin_date=${startYear}`;
+        // var queryURL = "http://api.nytimes.com/svc/search/v1/article?format=json&query=smoking&api-key=" + nytAPI;
+        const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytAPI + "&q=" + title;
+
+        return axios.get(queryURL).then((response) => {
+            console.log(response);
             // If get get a result, return that result's formatted address property
-            if (response.data.results[0]) {
-                return response.data.results[0];
+            const articleTitle = response.data.response.docs;
+            if (articleTitle) {
+                return articleTitle;
             }
             // If we don't get any results, return an empty string
             return "";
@@ -25,15 +30,15 @@ var helper = {
     },
 
     // This function hits our own server to retrieve the record of query results
-    getArticle: function() {
+    getSaved() {
         return axios.get("/api");
     },
 
     // This function posts new searches to our database.
-    postArticle: function(title) {
-        return axios.post("/api", { title: title });
+    postSaved (title, url) {
+        return axios.post("/api", { title: title, url: url });
     }
 };
 
 // We export the API helper
-module.exports = helper;
+export default helper;

@@ -1,68 +1,93 @@
 // Include React
-var React = require("react");
+import React from "react";
 
 // Here we include all of the sub-components
-var Search = require("./children/Search");
-var Saved = require("./children/Saved");
+import Search from "./children/Search";
+import Saved from "./children/Saved";
 
 // Helper for making AJAX requests to our API
-var helpers = require("./utils/helpers");
+import helpers from "./utils/helpers";
 
 // Creating the Main component
-var Main = React.createClass({
+class Main extends React.Component{
 
     // Added in article state variable
-    getInitialState: function() {
-        return { searchTerm: "", results: "", article: [] };
-    },
+    constructor(props) {
+        // This super(props) line lets us access our parents properties as props.
+        super(props);
+
+        this.state = {
+            searchTerm: "",
+            results:[],
+            Saved: []
+        };
+
+        this.setTerm = this.setTerm.bind(this);
+        this.setStartYear = this.setStartYear.bind(this);
+        this.setEndYear = this.setEndYear.bind(this);
+        this.getClick = this.getClick.bind(this);
+    }
+
+    // getInitialState: function() {
+    //     return { searchTerm: "", results: "", article: [] };
+    // },
 
     // The moment the page renders get the Article
-    componentDidMount: function() {
+    componentDidMount() {
         // Get the latest article.
         // If we have a new search term, run a new search
-        // if (prevState.searchTerm !== this.state.searchTerm) {
-        //     console.log("UPDATED");
-        // helpers.getArticle().then(function(response) {
-        //     console.log(response);
-        //     if (response !== this.state.article) {
-        //         console.log("Article", response.data);
-        //         this.setState({ article: response.data });
-        //     }
-        // }.bind(this));
-    },
+        helpers.getSaved().then(function (response) {
+            console.log(response);
+            if (response !== this.state.Saved) {
+                console.log("Article", response.data);
+                this.setState({Saved: response.data});
+            }
+        }.bind(this));
+    }
 
     // If the component changes (i.e. if a search is entered)...
-    componentDidUpdate: function() {
+    componentDidUpdate(prevProps, prevState) {
 
-        // Run the query for the address
-    //     helpers.runQuery(this.state.searchTerm).then(function(data) {
-    //         if (data !== this.state.results) {
-    //             console.log("Article", data);
-    //             this.setState({ results: data });
-    //
-    //             // After we've received the result... then post the search term to our history.
-    //             helpers.postArticle(this.state.searchTerm).then(function() {
-    //                 console.log("Updated!");
-    //
-    //                 // After we've done the post... then get the updated history
-    //                 helpers.getArticle().then(function(response) {
-    //                     console.log("Current Article", response.data);
-    //
-    //                     console.log("Article", response.data);
-    //
-    //                     this.setState({ article: response.data });
-    //
-    //                 }.bind(this));
-    //             }.bind(this));
-    //         }
-    //     }.bind(this));
-    },
+        // Run the query for the Search
+        if (prevState.searchTerm !== this.state.searchTerm) {
+            //Clears the Results array if there is a new Search
+            this.setState({results: []});
+            helpers.runQuery(this.state.searchTerm).then(function (data) {
+                if (data !== this.state.results) {
+                    for (let i = 0; i < 9; i++) {
+                        let newResults = {head: data[i].lead_paragraph, url:data[i].web_url};
+                        // Pushes to results array
+                        this.setState({results: this.state.results.concat(newResults)});
+                    }
+                }
+            }.bind(this));
+        }
+    }
     // This function allows childrens to update the parent.
-    setTerm: function(term) {
+    setTerm(term) {
         this.setState({ searchTerm: term });
-    },
+    }
+
+    setStartYear(startYear) {
+        this.setState({ searchTerm: startYear });
+    }
+
+    setEndYear(endYear) {
+        this.setState({ searchTerm: endYear });
+    }
+
+    getClick(todo) {
+        helpers.postSaved(todo.head, todo.url).then(function () {
+            // After we've done the post... then get the updated Saved
+            helpers.getSaved().then(function (response) {
+                this.setState({Saved: response.data});
+                console.log('Saved', this.state.Saved);
+            }.bind(this));
+        }.bind(this));
+    }
+
     // Here we render the function
-    render: function() {
+    render() {
         return (
             <div className="container">
                 <div className="row">
@@ -84,14 +109,14 @@ var Main = React.createClass({
 
                 <div className="row">
 
-                    <Saved article={this.state.Saved} />
+                    <Saved Saved={this.state.Saved} />
 
                 </div>
 
             </div>
         );
     }
-});
+}
 
 // Export the component back for use in other files
-module.exports = Main;
+export default Main;

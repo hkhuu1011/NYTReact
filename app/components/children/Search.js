@@ -1,52 +1,77 @@
 // Include React
-var React = require("react");
+import React from "react";
 
 // Creating the Form component
-var Search = React.createClass({
+class Search extends React.Component {
 
     // Here we set a generic state associated with the text being searched for
-    getInitialState: function() {
-        return {
-                term: "",
-                numRecords: "",
-                startYear: "",
-                endYear: ""
-        };
-    },
+    constructor(props){
+        super(props);
+        this.state = {term: "", numRecords:"", startYear: "", endYear:""};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    // getInitialState: function() {
+    //     return {
+    //             term: "",
+    //             numRecords: "",
+    //             startYear: "",
+    //             endYear: ""
+    //     };
+    // },
 
     // This function will respond to the user input
-    handleChange: function(event) {
-        console.log("event: ", event);
+    handleChange(event) {
+        const target = event.target;
+        const name = target.name;
+        this.setState({
+            [name]: event.target.value
+        });
+    }
 
-        var newState = {};
-        newState[event.target.id] = event.target.value;
-        this.setState(newState);
-    },
+    // handleChange: function(event) {
+    //     // console.log("event: ", event);
+    //
+    //     var newState = {};
+    //     newState[event.target.id] = event.target.value;
+    //     this.setState(newState);
+    // },
 
     // When a user submits...
-    handleSubmit: function(event) {
-        // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
-        // clicking the button
+    handleSubmit(event) {
         event.preventDefault();
-
         // Set the parent to have the search term
-        this.props.setTerm(
-                            this.state.term,
-                            this.state.numRecords,
-                            this.state.startYear,
-                            this.state.endYear
-        );
+        this.props.setTerm(this.state.term);
+        this.setState({term: ""});
+    }
 
-        this.setState({
-                            term: "",
-                            numRecords: "",
-                            startYear: "",
-                            endYear: ""
-        });
-    },
+    // handleSubmit: function(event) {
+    //     // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
+    //     // clicking the button
+    //     event.preventDefault();
+    //
+    //     // Set the parent to have the search term
+    //     this.props.setTerm(
+    //                         this.state.term,
+    //                         this.state.numRecords,
+    //                         this.state.startYear,
+    //                         this.state.endYear
+    //     );
+    //
+    //     this.setState({
+    //                         term: "",
+    //                         numRecords: "",
+    //                         startYear: "",
+    //                         endYear: ""
+    //     });
+    // },
     // Here we describe this component's render method
-    render: function() {
+    render() {
         return (
+
+    // render: function() {
+    //     return (
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title text-left"><strong>Search Parameters</strong></h3>
@@ -66,6 +91,7 @@ var Search = React.createClass({
                              Also note how each has an onChange event associated with our handleChange event.
                              */}
                             <input
+                                name = "term"
                                 value={this.state.term}
                                 type="text"
                                 className="form-control text-left"
@@ -91,6 +117,7 @@ var Search = React.createClass({
                                 Start Year (Optional):
                             </h5>
                             <input
+                                name="startYear"
                                 value={this.state.startYear}
                                 type="text"
                                 className="form-control text-left"
@@ -107,6 +134,7 @@ var Search = React.createClass({
                             </h5>
 
                             <input
+                                name="endYear"
                                 value={this.state.endYear}
                                 type="text"
                                 className="form-control text-left"
@@ -117,18 +145,18 @@ var Search = React.createClass({
                         </div>
 
                             <button className="btn btn-default" type="submit" id="runSearch">
-                                <i className="glyphicon glyphicon-search"></i> Search
+                                <div className="glyphicon glyphicon-search"></div> Search
                             </button>
 
                             <button className="btn btn-default" type="submit" id="clearAll">
-                                <i className="glyphicon glyphicon-trash"></i> Clear Results
+                                <div className="glyphicon glyphicon-trash"></div> Clear Results
                             </button>
                     </form>
                 </div>
             </div>
         );
     }
-});
+};
 
 // Export the component back for use in other files
-module.exports = Search;
+export default Search;

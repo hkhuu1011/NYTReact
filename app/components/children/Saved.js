@@ -1,10 +1,10 @@
 // Include React
-var React = require("react");
+import React from "react";
 
 // Creating the Results component
-var Saved = React.createClass({
+class Saved extends React.Component{
     // Here we render the function
-    render: function() {
+    render() {
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
@@ -16,7 +16,7 @@ var Saved = React.createClass({
             </div>
         );
     }
-});
+};
 
 // Export the component back for use in other files
-module.exports = Saved;
+export default Saved;
