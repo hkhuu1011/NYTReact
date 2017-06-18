@@ -13,8 +13,6 @@ const helper = {
         console.log(title);
 
         // Grabbing the article
-        // https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${myKey}&q=${topic}&begin_date=${startYear}`;
-        // var queryURL = "http://api.nytimes.com/svc/search/v1/article?format=json&query=smoking&api-key=" + nytAPI;
         const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytAPI + "&q=" + title;
 
         return axios.get(queryURL).then((response) => {

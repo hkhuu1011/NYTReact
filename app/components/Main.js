@@ -28,10 +28,6 @@ class Main extends React.Component{
         this.getClick = this.getClick.bind(this);
     }
 
-    // getInitialState: function() {
-    //     return { searchTerm: "", results: "", article: [] };
-    // },
-
     // The moment the page renders get the Article
     componentDidMount() {
         // Get the latest article.
@@ -55,7 +51,7 @@ class Main extends React.Component{
             helpers.runQuery(this.state.searchTerm).then(function (data) {
                 if (data !== this.state.results) {
                     for (let i = 0; i < 9; i++) {
-                        let newResults = {head: data[i].lead_paragraph, url:data[i].web_url};
+                        let newResults = {title: data[i].lead_paragraph, url:data[i].web_url};
                         // Pushes to results array
                         this.setState({results: this.state.results.concat(newResults)});
                     }
@@ -77,7 +73,7 @@ class Main extends React.Component{
     }
 
     getClick(todo) {
-        helpers.postSaved(todo.head, todo.url).then(function () {
+        helpers.postSaved(todo.title, todo.url).then(function () {
             // After we've done the post... then get the updated Saved
             helpers.getSaved().then(function (response) {
                 this.setState({Saved: response.data});

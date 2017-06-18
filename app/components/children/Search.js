@@ -12,14 +12,6 @@ class Search extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    // getInitialState: function() {
-    //     return {
-    //             term: "",
-    //             numRecords: "",
-    //             startYear: "",
-    //             endYear: ""
-    //     };
-    // },
 
     // This function will respond to the user input
     handleChange(event) {
@@ -30,14 +22,6 @@ class Search extends React.Component {
         });
     }
 
-    // handleChange: function(event) {
-    //     // console.log("event: ", event);
-    //
-    //     var newState = {};
-    //     newState[event.target.id] = event.target.value;
-    //     this.setState(newState);
-    // },
-
     // When a user submits...
     handleSubmit(event) {
         event.preventDefault();
@@ -46,32 +30,9 @@ class Search extends React.Component {
         this.setState({term: ""});
     }
 
-    // handleSubmit: function(event) {
-    //     // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
-    //     // clicking the button
-    //     event.preventDefault();
-    //
-    //     // Set the parent to have the search term
-    //     this.props.setTerm(
-    //                         this.state.term,
-    //                         this.state.numRecords,
-    //                         this.state.startYear,
-    //                         this.state.endYear
-    //     );
-    //
-    //     this.setState({
-    //                         term: "",
-    //                         numRecords: "",
-    //                         startYear: "",
-    //                         endYear: ""
-    //     });
-    // },
     // Here we describe this component's render method
     render() {
         return (
-
-    // render: function() {
-    //     return (
             <div className="panel panel-default">
                 <div className="panel-heading">
                     <h3 className="panel-title text-left"><strong>Search Parameters</strong></h3>
@@ -156,7 +117,7 @@ class Search extends React.Component {
             </div>
         );
     }
-};
+}
 
 // Export the component back for use in other files
 export default Search;
