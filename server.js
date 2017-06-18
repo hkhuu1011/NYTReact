@@ -1,16 +1,16 @@
 // Dependencies
-var express = require("express");
-var bodyParser = require("body-parser");
-var logger = require("morgan");
-var mongoose = require("mongoose");
+import express from "express";
+import bodyParser from "body-parser";
+import logger from "morgan";
+import mongoose from "mongoose";
 
 // Require Articles Schema
-var Article = require("./models/Article");
+import Article from "./models/Article";
 
 // Initialize Express
-var app = express();
+const app = express();
 // Sets an initial port. We'll use this later in our listener
-var PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 
 // Run Morgan for Logging
 app.use(logger("dev"));
@@ -26,7 +26,7 @@ app.use(express.static("public"));
 
 // Database configuration with mongoose
 mongoose.connect("mongodb://localhost/nytreact");
-var db = mongoose.connection;
+const db = mongoose.connection;
 
 // Show any mongoose errors
 db.on("error", function(error) {
@@ -45,18 +45,35 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+app.get("/api", function(req, res) {
+    Article.find({}).sort (
+        ["date", "descending"]
+    ).limit(10).exec(function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(doc);
+        }
+    });
+});
+
+
 // This is the route we will send GET requests to retrieve our most recent search data.
 // We will call this route the moment our page gets rendered
-// app.get("/api", function(req, res) {
-// 	Article.create({
-// 		title: req.body.title,
-// 		date: req.body.date,
-// 		link: req.body.link
-// 	})
-// });
-
-
-
+app.post("/api", function(req, res) {
+    console.log("Article: ", req.body.title);
+	Article.create({
+		title: req.body.title,
+		date: Date.now(),
+		url: req.body.url
+	}, function(err) {
+	    if (err) {
+	        console.log(err);
+        } else {
+	        res.send("Saved Search");
+        }
+    });
+});
 
 
 // Listen on port 3000
