@@ -10,8 +10,20 @@ class Saved extends React.Component{
                 <div className="panel-heading">
                     <h3 className="panel-title text-center">Top Articles</h3>
                 </div>
-                <div className="panel-body text-center">
-                    <p>Search Results</p>
+                <div className="panel-body text-left">
+                    {/* Here we use a map function to loop through an array in JSX */}
+                    {this.props.saved.map(function(search, i) {
+                        return (
+                            <ul>
+                                <li>
+                                <div key={i}>
+                                    <h3>{search.title}</h3>
+                                    <h5><a href={search.url}>{search.url}</a></h5>
+                                </div>
+                                </li>
+                            </ul>
+                        );
+                    })}
                 </div>
             </div>
         );

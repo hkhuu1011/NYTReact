@@ -19,12 +19,12 @@ class Main extends React.Component{
         this.state = {
             searchTerm: "",
             results:[],
-            Saved: []
+            saved: []
         };
 
         this.setTerm = this.setTerm.bind(this);
-        this.setStartYear = this.setStartYear.bind(this);
-        this.setEndYear = this.setEndYear.bind(this);
+        // this.setStartYear = this.setStartYear.bind(this);
+        // this.setEndYear = this.setEndYear.bind(this);
         this.getClick = this.getClick.bind(this);
     }
 
@@ -34,9 +34,9 @@ class Main extends React.Component{
         // If we have a new search term, run a new search
         helpers.getSaved().then(function (response) {
             console.log(response);
-            if (response !== this.state.Saved) {
+            if (response !== this.state.saved) {
                 console.log("Article", response.data);
-                this.setState({Saved: response.data});
+                this.setState({saved: response.data});
             }
         }.bind(this));
     }
@@ -47,13 +47,13 @@ class Main extends React.Component{
         // Run the query for the Search
         if (prevState.searchTerm !== this.state.searchTerm) {
             //Clears the Results array if there is a new Search
-            this.setState({results: []});
+            this.setState({saved: []});
             helpers.runQuery(this.state.searchTerm).then(function (data) {
-                if (data !== this.state.results) {
+                if (data !== this.state.saved) {
                     for (let i = 0; i < 9; i++) {
-                        let newResults = {title: data[i].lead_paragraph, url:data[i].web_url};
+                        let newsaved = {title: data[i].lead_paragraph, url:data[i].web_url};
                         // Pushes to results array
-                        this.setState({results: this.state.results.concat(newResults)});
+                        this.setState({saved: this.state.saved.concat(newsaved)});
                     }
                 }
             }.bind(this));
@@ -64,20 +64,20 @@ class Main extends React.Component{
         this.setState({ searchTerm: term });
     }
 
-    setStartYear(startYear) {
-        this.setState({ searchTerm: startYear });
-    }
-
-    setEndYear(endYear) {
-        this.setState({ searchTerm: endYear });
-    }
+    // setStartYear(startYear) {
+    //     this.setState({ searchTerm: startYear });
+    // }
+    //
+    // setEndYear(endYear) {
+    //     this.setState({ searchTerm: endYear });
+    // }
 
     getClick(todo) {
         helpers.postSaved(todo.title, todo.url).then(function () {
             // After we've done the post... then get the updated Saved
             helpers.getSaved().then(function (response) {
-                this.setState({Saved: response.data});
-                console.log('Saved', this.state.Saved);
+                this.setState({saved: response.data});
+                console.log('Saved', this.state.saved);
             }.bind(this));
         }.bind(this));
     }
@@ -105,7 +105,7 @@ class Main extends React.Component{
 
                 <div className="row">
 
-                    <Saved Saved={this.state.Saved} />
+                    <Saved saved={this.state.saved} />
 
                 </div>
 

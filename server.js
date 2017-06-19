@@ -1,16 +1,16 @@
 // Dependencies
-import express from "express";
-import bodyParser from "body-parser";
-import logger from "morgan";
-import mongoose from "mongoose";
+var express = require ("express");
+var bodyParser = require ("body-parser");
+var logger = require ("morgan");
+var mongoose = require ("mongoose");
 
 // Require Articles Schema
-import Article from "./models/Article";
+var Article = require ("./models/Article");
 
 // Initialize Express
-const app = express();
+var app = express();
 // Sets an initial port. We'll use this later in our listener
-const PORT = process.env.PORT || 3001;
+var PORT = process.env.PORT || 3001;
 
 // Run Morgan for Logging
 app.use(logger("dev"));
@@ -26,7 +26,7 @@ app.use(express.static("public"));
 
 // Database configuration with mongoose
 mongoose.connect("mongodb://localhost/nytreact");
-const db = mongoose.connection;
+var db = mongoose.connection;
 
 // Show any mongoose errors
 db.on("error", function(error) {
@@ -46,9 +46,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/api", function(req, res) {
-    Article.find({}).sort (
-        ["date", "descending"]
-    ).limit(10).exec(function(err, doc) {
+    Article.find({}).limit(10).exec(function(err, doc) {
         if (err) {
             console.log(err);
         } else {
