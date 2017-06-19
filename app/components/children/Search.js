@@ -66,7 +66,7 @@ class Search extends React.Component {
                         <h5 className="numRecordsSelect">
                             Number of Records to Retrieve:
                         </h5>
-                        <select className="form-control" id="numRecordsSelect" value={this.state.numRecords}>
+                        <select name="numRecords" className="form-control" id="numRecordsSelect" value={this.state.numRecords} onChange={this.handleChange}>
                             <option value="1">1</option>
                             <option value="5">5</option>
                             <option value="10">10</option>

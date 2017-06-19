@@ -18,6 +18,7 @@ class Saved extends React.Component{
                                 <li>
                                 <div key={i}>
                                     <h3>{search.title}</h3>
+                                    <h5>{search.author}</h5>
                                     <h5><a href={search.url}>{search.url}</a></h5>
                                 </div>
                                 </li>

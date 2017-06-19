@@ -62,6 +62,7 @@ app.post("/api", function(req, res) {
     console.log("Article: ", req.body.title);
 	Article.create({
 		title: req.body.title,
+        author: req.body.author,
 		date: Date.now(),
 		url: req.body.url
 	}, function(err) {
