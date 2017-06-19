@@ -51,7 +51,7 @@ class Main extends React.Component{
             helpers.runQuery(this.state.searchTerm).then(function (data) {
                 if (data !== this.state.saved) {
                     for (let i = 0; i < 9; i++) {
-                        let newsaved = {title: data[i].headline.main, author: data[i].byline.original, url:data[i].web_url};
+                        let newsaved = {title: data[i].headline.main, author: data[i].byline.original, date: data[i].pub_date, url:data[i].web_url};
                         // Pushes to results array
                         this.setState({saved: this.state.saved.concat(newsaved)});
                     }
@@ -73,7 +73,7 @@ class Main extends React.Component{
     // }
 
     getClick(todo) {
-        helpers.postSaved(todo.title, todo.author, todo.url).then(function () {
+        helpers.postSaved(todo.title, todo.author, todo.date, todo.url).then(function () {
             // After we've done the post... then get the updated Saved
             helpers.getSaved().then(function (response) {
                 this.setState({saved: response.data});
