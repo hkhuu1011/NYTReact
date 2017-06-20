@@ -1,0 +1,18 @@
+html, body {
+    box-sizing: border-box;
+}
+
+.jumbotron {
+    background-color: #20315a;
+    color: #fff;
+}
+
+.panel-default > .panel-heading {
+    color: #fff;
+    background-color: #20315a;
+    border-color: #ddd;
+}
+
+.panel-body {
+    padding: 2% 4% 2% 4%;
+}
