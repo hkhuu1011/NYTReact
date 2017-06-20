@@ -35,7 +35,7 @@ class Search extends React.Component {
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title text-left"><strong>Search Parameters</strong></h3>
+                    <h3 className="panel-title text-left">Search Parameters</h3>
                 </div>
                 <div className="panel-body text-left">
                     <form onSubmit={this.handleSubmit}>
@@ -84,7 +84,6 @@ class Search extends React.Component {
                                 className="form-control text-left"
                                 id="startYear"
                                 onChange={this.handleChange}
-                                required
                             />
                         </div>
 
@@ -101,7 +100,6 @@ class Search extends React.Component {
                                 className="form-control text-left"
                                 id="endYear"
                                 onChange={this.handleChange}
-                                required
                             />
                         </div>
 

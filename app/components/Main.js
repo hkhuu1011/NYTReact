@@ -64,14 +64,6 @@ class Main extends React.Component{
         this.setState({ searchTerm: term });
     }
 
-    // setStartYear(startYear) {
-    //     this.setState({ searchTerm: startYear });
-    // }
-    //
-    // setEndYear(endYear) {
-    //     this.setState({ searchTerm: endYear });
-    // }
-
     getClick(todo) {
         helpers.postSaved(todo.title, todo.author, todo.date, todo.url).then(function () {
             // After we've done the post... then get the updated Saved
@@ -88,11 +80,9 @@ class Main extends React.Component{
             <div className="container">
                 <div className="row">
                     <div className="jumbotron">
-                        <h2 className="text-center">
-                            <strong>
+                        <h1 className="text-center">
                             New York Times Article Search
-                            </strong>
-                        </h2>
+                        </h1>
                     </div>
 
                     <div className="row">
