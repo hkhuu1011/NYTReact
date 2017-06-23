@@ -2,6 +2,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+// Include Routes
+// import routes from "./config/routes";
+
 // Include the main Main Component
 import Main from "./components/Main";
 

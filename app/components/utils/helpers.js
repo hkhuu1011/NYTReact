@@ -8,12 +8,13 @@ const nytAPI = "220abae76758485297324496caf23575";
 const helper = {
 
     // This function serves our purpose of running the query to NYT.
-    runQuery: (title) => {
-
+    runQuery: (title, startyear, endyear) => {
         console.log(title);
+        const startYear = startyear + "0101";
+        const endYear = endyear + "1231";
 
         // Grabbing the article
-        const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytAPI + "&q=" + title;
+        const queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${nytAPI}&q=${title}&begin_date=${startYear}&end_date=${endYear}";
 
         return axios.get(queryURL).then((response) => {
             console.log(response);

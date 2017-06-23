@@ -25,7 +25,17 @@ app.use(express.static("public"));
 //-----------------------------------------------------------
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/nytreact");
+var databaseUri = 'mongodb://localhost/nytreact';
+
+if(process.env.MONGODB_URI)
+{
+    mongoose.connect(process.env.MONGODB_URI);
+}
+else
+{
+    mongoose.connect(databaseUri);
+}
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -46,7 +56,9 @@ app.get("/", function(req, res) {
 });
 
 app.get("/api", function(req, res) {
-    Article.find({}).limit(10).exec(function(err, doc) {
+    Article.find({}).sort([
+        ["date", "descending"]
+    ]).limit(5).exec(function(err, doc) {
         if (err) {
             console.log(err);
         } else {
@@ -62,7 +74,6 @@ app.post("/api", function(req, res) {
     console.log("Article: ", req.body.title);
 	Article.create({
 		title: req.body.title,
-        author: req.body.author,
 		date: Date.now(),
 		url: req.body.url
 	}, function(err) {

@@ -5,7 +5,7 @@ import React from "react";
 import Search from "./children/Search";
 import Saved from "./children/Saved";
 
-// Helper for making AJAX requests to our API
+// Helper Function
 import helpers from "./utils/helpers";
 
 // Creating the Main component
@@ -18,13 +18,15 @@ class Main extends React.Component{
 
         this.state = {
             searchTerm: "",
-            results:[],
+            startYear: "",
+            endYear: "",
             saved: []
         };
 
-        this.setTerm = this.setTerm.bind(this);
-        // this.setStartYear = this.setStartYear.bind(this);
-        // this.setEndYear = this.setEndYear.bind(this);
+        this.setSearchTerm = this.setSearchTerm.bind(this);
+        this.setStartYear = this.setStartYear.bind(this);
+        this.setEndYear = this.setEndYear.bind(this);
+        this.setSaved = this.setSaved.bind(this);
         this.getClick = this.getClick.bind(this);
     }
 
@@ -50,7 +52,7 @@ class Main extends React.Component{
             this.setState({saved: []});
             helpers.runQuery(this.state.searchTerm).then(function (data) {
                 if (data !== this.state.saved) {
-                    for (let i = 0; i < 9; i++) {
+                    for (let i = 0; i < 4; i++) {
                         let newsaved = {title: data[i].headline.main, author: data[i].byline.original, date: data[i].pub_date, url:data[i].web_url};
                         // Pushes to results array
                         this.setState({saved: this.state.saved.concat(newsaved)});
@@ -59,9 +61,22 @@ class Main extends React.Component{
             }.bind(this));
         }
     }
+
     // This function allows childrens to update the parent.
-    setTerm(term) {
-        this.setState({ searchTerm: term });
+    setSearchTerm(searchterm) {
+        this.setState({ searchTerm: searchterm });
+    }
+
+    setStartYear(startyear) {
+        this.setState({ startYear: startyear});
+    }
+
+    setEndYear(endyear) {
+        this.setState({ endYear: endyear});
+    }
+
+    setSaved(saved) {
+        this.setState({ saved: saved});
     }
 
     getClick(todo) {
@@ -73,6 +88,7 @@ class Main extends React.Component{
             }.bind(this));
         }.bind(this));
     }
+
 
     // Here we render the function
     render() {
@@ -87,7 +103,7 @@ class Main extends React.Component{
 
                     <div className="row">
 
-                        <Search setTerm={this.setTerm} />
+                        <Search setSearchTerm={this.setSearchTerm} />
 
                     </div>
 
@@ -95,7 +111,8 @@ class Main extends React.Component{
 
                 <div className="row">
 
-                    <Saved saved={this.state.saved} />
+                    <Saved saved={this.state.saved} getClicked={this.getClick} />
+                    {/*{this.props.children}*/}
 
                 </div>
 

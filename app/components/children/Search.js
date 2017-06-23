@@ -1,16 +1,30 @@
 // Include React
 import React from "react";
 
+// import Saved from "./Saved";
+
+// Helper for making AJAX requests to our API
+// import helpers from "../utils/helpers";
+
+// Including the Link component from React Router to navigate within our application without full page reloads
+// let Link = require("react-router").Link;
+
 // Creating the Form component
 class Search extends React.Component {
 
     // Here we set a generic state associated with the text being searched for
     constructor(props){
         super(props);
-        this.state = {term: "", numRecords:"", startYear: "", endYear:""};
+        this.state = {
+            searchTerm: "",
+            startYear:"",
+            endYear:"",
+            saved: []
+        };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.getClick = this.getClick.bind(this);
     }
 
     // This function will respond to the user input
@@ -26,9 +40,10 @@ class Search extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         // Set the parent to have the search term
-        this.props.setTerm(this.state.term);
-        this.setState({term: ""});
+        this.props.setSearchTerm(this.state.searchTerm);
+        this.setState({searchTerm: "", startYear: "", endYear: ""});
     }
+
 
     // Here we describe this component's render method
     render() {
@@ -52,8 +67,8 @@ class Search extends React.Component {
                              Also note how each has an onChange event associated with our handleChange event.
                              */}
                             <input
-                                name = "term"
-                                value={this.state.term}
+                                name = "searchTerm"
+                                value={this.state.searchTerm}
                                 type="text"
                                 className="form-control text-left"
                                 id="term"
@@ -61,16 +76,6 @@ class Search extends React.Component {
                                 required
                             />
                         </div>
-
-                        {/*Number option*/}
-                        <h5 className="numRecordsSelect">
-                            Number of Records to Retrieve:
-                        </h5>
-                        <select name="numRecords" className="form-control" id="numRecordsSelect" value={this.state.numRecords} onChange={this.handleChange}>
-                            <option value="1">1</option>
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                        </select>
 
                         {/*Start Year*/}
                         <div className="form-group">
@@ -103,15 +108,22 @@ class Search extends React.Component {
                             />
                         </div>
 
-                            <button className="btn btn-default" type="submit" id="runSearch">
+                            {/*<Link to="Search">*/}
+                                <button className="btn btn-default" type="submit" id="runSearch">
                                 <div className="glyphicon glyphicon-search"></div> Search
-                            </button>
+                                </button>
+                            {/*</Link>*/}
 
-                            <button className="btn btn-default" type="submit" id="clearAll">
-                                <div className="glyphicon glyphicon-trash"></div> Clear Results
-                            </button>
+                            {/*<Link to="Saved">*/}
+                                <button className="btn btn-default" type="submit" id="savedArticles">
+                                <div className="glyphicon glyphicon-saved"></div> Saved Articles
+                                </button>
+                            {/*</Link>*/}
                     </form>
                 </div>
+
+                {/*<Saved saved={this.state.saved} getClicked={this.getClick}/>*/}
+
             </div>
         );
     }

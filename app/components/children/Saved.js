@@ -15,10 +15,11 @@ class Saved extends React.Component{
                     {this.props.saved.map(function(search, i) {
                         return (
                                 <div key={i}>
-                                    <h3>{search.title}</h3>
-                                    <h5>{search.author}</h5>
-                                    <h5>{search.date}</h5>
-                                    <h5><a href={search.url}>{search.url}</a></h5>
+                                    <h3 className="articleTitle">{search.title}</h3>
+                                    <p className="articleAuthor">{search.author}</p>
+                                    <p className="articleDate">{search.date}</p>
+                                    <a className="articleURL" href={search.url} target="_blank">{search.url}</a>
+
                                 </div>
                         );
                     })}
