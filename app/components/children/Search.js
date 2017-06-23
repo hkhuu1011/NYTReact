@@ -7,7 +7,7 @@ import React from "react";
 // import helpers from "../utils/helpers";
 
 // Including the Link component from React Router to navigate within our application without full page reloads
-// let Link = require("react-router").Link;
+let Link = require("react-router").Link;
 
 // Creating the Form component
 class Search extends React.Component {
@@ -108,17 +108,17 @@ class Search extends React.Component {
                             />
                         </div>
 
-                            {/*<Link to="Search">*/}
+                            <Link to="Search">
                                 <button className="btn btn-default" type="submit" id="runSearch">
                                 <div className="glyphicon glyphicon-search"></div> Search
                                 </button>
-                            {/*</Link>*/}
+                            </Link>
 
-                            {/*<Link to="Saved">*/}
+                            <Link to="Saved">
                                 <button className="btn btn-default" type="submit" id="savedArticles">
                                 <div className="glyphicon glyphicon-saved"></div> Saved Articles
                                 </button>
-                            {/*</Link>*/}
+                            </Link>
                     </form>
                 </div>
 
