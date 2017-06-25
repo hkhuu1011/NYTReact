@@ -24,37 +24,20 @@ class Saved extends React.Component{
         return (
             <div className="panel panel-default">
                 <div className="panel-heading">
-                    <h3 className="panel-title text-center">Top Articles</h3>
+                    <h3 className="panel-title text-left">Article Results</h3>
                 </div>
                 <div className="panel-body text-left">
                     {/* Here we use a map function to loop through an array in JSX */}
-
-                    {this.state.saved.map(function(search, i) {
-                        for (let i = 0; i < 4; i++) {
-                            let newsaved = {title: search[i].headline.main, author: search[i].byline.original, date: search[i].pub_date, url: search[i].web_url};
-                        }
+                    {this.state.articles.map(function(article) {
                         return (
-                            <div key={i}>
-                                <h3 className="articleTitle">{newsaved.title}</h3>
-                                <p className="articleAuthor">{newsaved.author}</p>
-                                <p className="articleDate">{newsaved.date}</p>
-                                <a className="articleURL" href={newsaved.url} target="_blank">{newsaved.url}</a>
-
-                            </div>
+                                <div className="results" key={article._id}>
+                                    <h3 className="articleTitle">{article.headline.main}</h3>
+                                    <p className="articleAuthor">{article.byline.original || article.source }</p>
+                                    <p className="articleDate">{article.pub_date}</p>
+                                    <a className="articleURL" href={article.web_url} target="_blank">{article.web_url}</a>
+                                </div>
                         );
                     })}
-
-                    {/*{this.state.articles.map(function(search, i) {*/}
-                        {/*return (*/}
-                                {/*<div key={i}>*/}
-                                    {/*<h3 className="articleTitle">{search.title}</h3>*/}
-                                    {/*<p className="articleAuthor">{search.author}</p>*/}
-                                    {/*<p className="articleDate">{search.date}</p>*/}
-                                    {/*<a className="articleURL" href={search.url} target="_blank">{search.url}</a>*/}
-
-                                {/*</div>*/}
-                        {/*);*/}
-                    {/*})}*/}
                 </div>
             </div>
         );

@@ -107,18 +107,7 @@ class Main extends React.Component{
                         {
                             this.props.children
                         }
-
-
                     </div>
-
-                </div>
-
-                <div className="row">
-
-                    {/*<Link to="/Search"><button className="btn btn-default btn-sm">Search</button></Link>*/}
-                    {/*<Link to="/Saved"><button className="btn btn-default btn-sm">Saved Articles</button></Link>*/}
-                    {/*{this.props.children}*/}
-
 
                 </div>
 
