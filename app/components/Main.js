@@ -8,6 +8,8 @@ import Saved from "./children/Saved";
 // Helper Function
 import helpers from "./utils/helpers";
 
+// var Link = require("react-router").Link;
+
 // Creating the Main component
 class Main extends React.Component{
 
@@ -31,36 +33,36 @@ class Main extends React.Component{
     }
 
     // The moment the page renders get the Article
-    componentDidMount() {
-        // Get the latest article.
-        // If we have a new search term, run a new search
-        helpers.getSaved().then(function (response) {
-            console.log(response);
-            if (response !== this.state.saved) {
-                console.log("Article", response.data);
-                this.setState({saved: response.data});
-            }
-        }.bind(this));
-    }
+    // componentDidMount() {
+    //     // Get the latest article.
+    //     // If we have a new search term, run a new search
+    //     helpers.getSaved().then(function (response) {
+    //         console.log(response);
+    //         if (response !== this.state.saved) {
+    //             console.log("Article", response.data);
+    //             this.setState({saved: response.data});
+    //         }
+    //     }.bind(this));
+    // }
 
     // If the component changes (i.e. if a search is entered)...
-    componentDidUpdate(prevProps, prevState) {
-
-        // Run the query for the Search
-        if (prevState.searchTerm !== this.state.searchTerm) {
-            //Clears the Results array if there is a new Search
-            this.setState({saved: []});
-            helpers.runQuery(this.state.searchTerm).then(function (data) {
-                if (data !== this.state.saved) {
-                    for (let i = 0; i < 4; i++) {
-                        let newsaved = {title: data[i].headline.main, author: data[i].byline.original, date: data[i].pub_date, url:data[i].web_url};
-                        // Pushes to results array
-                        this.setState({saved: this.state.saved.concat(newsaved)});
-                    }
-                }
-            }.bind(this));
-        }
-    }
+    // componentDidUpdate(prevProps, prevState) {
+    //
+    //     // Run the query for the Search
+    //     if (prevState.searchTerm !== this.state.searchTerm) {
+    //         //Clears the Results array if there is a new Search
+    //         this.setState({saved: []});
+    //         helpers.runQuery(this.state.searchTerm).then(function (data) {
+    //             if (data !== this.state.saved) {
+    //                 for (let i = 0; i < 4; i++) {
+    //                     let newsaved = {title: data[i].headline.main, author: data[i].byline.original, date: data[i].pub_date, url:data[i].web_url};
+    //                     // Pushes to results array
+    //                     this.setState({saved: this.state.saved.concat(newsaved)});
+    //                 }
+    //             }
+    //         }.bind(this));
+    //     }
+    // }
 
     // This function allows childrens to update the parent.
     setSearchTerm(searchterm) {
@@ -102,8 +104,10 @@ class Main extends React.Component{
                     </div>
 
                     <div className="row">
+                        {
+                            this.props.children
+                        }
 
-                        <Search setSearchTerm={this.setSearchTerm} />
 
                     </div>
 
@@ -111,8 +115,10 @@ class Main extends React.Component{
 
                 <div className="row">
 
-                    <Saved saved={this.state.saved} getClicked={this.getClick} />
+                    {/*<Link to="/Search"><button className="btn btn-default btn-sm">Search</button></Link>*/}
+                    {/*<Link to="/Saved"><button className="btn btn-default btn-sm">Saved Articles</button></Link>*/}
                     {/*{this.props.children}*/}
+
 
                 </div>
 

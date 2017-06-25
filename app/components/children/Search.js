@@ -1,13 +1,13 @@
 // Include React
 import React from "react";
 
-// import Saved from "./Saved";
+import Saved from "./Saved";
 
 // Helper for making AJAX requests to our API
-// import helpers from "../utils/helpers";
+import helpers from "../utils/helpers";
 
 // Including the Link component from React Router to navigate within our application without full page reloads
-let Link = require("react-router").Link;
+// let Link = require("react-router").Link;
 
 // Creating the Form component
 class Search extends React.Component {
@@ -40,8 +40,22 @@ class Search extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         // Set the parent to have the search term
-        this.props.setSearchTerm(this.state.searchTerm);
-        this.setState({searchTerm: "", startYear: "", endYear: ""});
+        // this.props.setSearchTerm(this.state.searchTerm);
+        // this.setState({searchTerm: "", startYear: "", endYear: ""});
+
+        this.setState({saved: []});
+        helpers.runQuery(this.state.searchTerm, this.state.startYear, this.state.endYear).then(function (data) {
+            if (data.data.response.docs !== this.state.saved) {
+                // for (let i = 0; i < 4; i++) {
+                //     let newsaved = {title: data[i].headline.main, author: data[i].byline.original, date: data[i].pub_date, url:data[i].web_url};
+                //     // Pushes to results array
+                //     this.setState({saved: this.state.saved.concat(newsaved)});
+                // }
+                this.setState({
+                    saved: data.data.response.docs
+                });
+            }
+        }.bind(this));
     }
 
 
@@ -108,21 +122,21 @@ class Search extends React.Component {
                             />
                         </div>
 
-                            <Link to="Search">
+
                                 <button className="btn btn-default" type="submit" id="runSearch">
                                 <div className="glyphicon glyphicon-search"></div> Search
                                 </button>
-                            </Link>
 
-                            <Link to="Saved">
+
+                            {/*<Link to="Saved" onSubmit={this.handleSubmit}>*/}
                                 <button className="btn btn-default" type="submit" id="savedArticles">
                                 <div className="glyphicon glyphicon-saved"></div> Saved Articles
                                 </button>
-                            </Link>
+                            {/*</Link>*/}
                     </form>
                 </div>
 
-                {/*<Saved saved={this.state.saved} getClicked={this.getClick}/>*/}
+                <Saved saved={this.state.saved}/>
 
             </div>
         );
