@@ -9,6 +9,8 @@ class Saved extends React.Component{
         this.state = {
             articles: props.saved || []
         };
+
+        // this.getClick = this.getClick.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -18,6 +20,17 @@ class Saved extends React.Component{
             })
         }
     }
+    //
+    // getClick() {
+    //     console.log(this.props.saved);
+    //     helpers.postSaved(article.headline.main, article.web_url).then(function () {
+    //         // After we've done the post... then get the updated Saved
+    //         helpers.getSaved().then(function(response) {
+    //             this.setState({dbsaved: response.data});
+    //             console.log('Saved', this.state.dbsaved);
+    //         }.bind(this));
+    //     }.bind(this));
+    // }
 
     // Here we render the function
     render() {
@@ -35,6 +48,8 @@ class Saved extends React.Component{
                                     <p className="articleAuthor">{article.byline.original || article.source }</p>
                                     <p className="articleDate">{article.pub_date}</p>
                                     <a className="articleURL" href={article.web_url} target="_blank">{article.web_url}</a>
+                                    <br/>
+                                    {/*<button className="btn btn-primary" onClick={this.getClick} type="button btn-default">Save</button>*/}
                                 </div>
                         );
                     })}

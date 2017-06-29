@@ -24,7 +24,6 @@ class Search extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.getClick = this.getClick.bind(this);
     }
 
     // This function will respond to the user input

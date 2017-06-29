@@ -22,7 +22,7 @@ const routes = (
             <Route path="Saved" component={Saved} />
 
             {/* If user selects dbSaved then show the appropriate component*/}
-            {/*<Route path ="dbSaved" component="{dbSaved}" />*/}
+            {/*<Route path ="dbSaved" component={dbSaved} />*/}
 
             {/* If user selects any other path... we get the Home Route */}
             <IndexRoute component={Search} />

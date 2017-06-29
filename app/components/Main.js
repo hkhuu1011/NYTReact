@@ -29,7 +29,7 @@ class Main extends React.Component{
         this.setStartYear = this.setStartYear.bind(this);
         this.setEndYear = this.setEndYear.bind(this);
         this.setSaved = this.setSaved.bind(this);
-        this.getClick = this.getClick.bind(this);
+        // this.getClick = this.getClick.bind(this);
     }
 
     // The moment the page renders get the Article
@@ -81,16 +81,15 @@ class Main extends React.Component{
         this.setState({ saved: saved});
     }
 
-    getClick(todo) {
-        helpers.postSaved(todo.title, todo.author, todo.date, todo.url).then(function () {
-            // After we've done the post... then get the updated Saved
-            helpers.getSaved().then(function (response) {
-                this.setState({saved: response.data});
-                console.log('Saved', this.state.saved);
-            }.bind(this));
-        }.bind(this));
-    }
-
+    // getClick(todo) {
+    //     helpers.postSaved(todo.article.headline.main, todo.article.web_url).then(function () {
+    //         // After we've done the post... then get the updated Saved
+    //         helpers.getSaved().then(function(response) {
+    //             this.setState({dbsaved: response.data});
+    //             console.log('Saved', this.state.dbsaved);
+    //         }.bind(this));
+    //     }.bind(this));
+    // }
 
     // Here we render the function
     render() {
